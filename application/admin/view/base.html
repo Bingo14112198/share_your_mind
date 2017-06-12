@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="__STATIC__/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="__STATIC__/admin/css/index.css">
+    <link rel="shortcut icon" type="image/x-icon" href="__STATIC__/bird.ico">
+    <style>
+        i{
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body class="mdui-appbar-with-toobar mdui-drawer-body-left mdui-theme-primary-teal ">
+<header class="mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar mdui-color-theme">
+            <span id="open-draw" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"  >
+                <i class="mdui-icon material-icons">&#xe5d2;</i>
+            </span>
+        <a href="./" class="mdui-typo-headline mdui-hidden-xs">ZBingo</a>
+        <a href="" class="mdui-toolbar-title">后台管理系统</a>
+        <div class="mdui-toolbar-spacer"></div>
+        <a href="" class="mdui-toolbar-title">{$Request.session.admin}</a>
+        <span id="open-menu" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"  mdui-tooltip="{content:'操作'}">
+                <i class="mdui-icon material-icons">&#xeb41;</i>
+            </span>
+        <ul class="mdui-menu" id="menu">
+            <li class="mdui-menu-item">
+                <a href="" class="mdui-ripple">刷新</a>
+            </li>
+            <li class="mdui-menu-item">
+                <a href="{:url('admin/login/logout')}" class="mdui-ripple">登出</a>
+            </li>
+        </ul>
+    </div>
+</header>
+<div class="mdui-drawer " id="drawer" style="top: 64px;">
+    <ul class="mdui-list" mdui-collapse="{accordion: true}" style="max-width: 360px;">
+        <li class="mdui-list-item mdui-ripple">
+            <i class="mdui-icon mdui-list-item-icon material-icons mdui-text-color-blue">&#xe88a;</i>
+            <a class="mdui-list-item-content" href="{:url('admin/index/index')}">首页</a>
+        </li>
+        <li class="mdui-list-item mdui-ripple">
+            <i class="mdui-icon mdui-list-item-icon material-icons mdui-text-color-green">&#xe7fb;</i>
+            <a class="mdui-list-item-content" href="{:url('admin/admin/adminlist')}">管理员管理</a>
+        </li>
+        <li class="mdui-list-item mdui-ripple">
+            <i class="mdui-icon mdui-list-item-icon material-icons mdui-text-color-deep-orange">&#xe3e3;</i>
+            <a class="mdui-list-item-content" href="{:url('admin/article/showlist')}">管理员文章</a>
+        </li>
+        <li class="mdui-list-item mdui-ripple">
+            <i class="mdui-icon mdui-list-item-icon material-icons mdui-text-color-indigo">&#xe3b8;</i>
+            <a class="mdui-list-item-content" href="{:url('admin/userarticle/showlist')}">用户文章管理</a>
+        </li>
+        <li class="mdui-list-item mdui-ripple">
+            <i class="mdui-icon mdui-list-item-icon material-icons mdui-text-color-purple">&#xe226;</i>
+            <a class="mdui-list-item-content" href="{:url('admin/category/index')}">文章分类</a>
+        </li>
+        <li class="mdui-list-item mdui-ripple">
+            <i class="mdui-icon mdui-list-item-icon material-icons mdui-text-color-cyan">&#xe851;</i>
+            <a class="mdui-list-item-content" href="{:url('admin/user/userlist')}">用户管理</a>
+        </li>
+        <li class="mdui-list-item mdui-ripple">
+            <i class="mdui-icon mdui-list-item-icon material-icons mdui-text-color-brown">&#xe0bf;</i>
+            <a class="mdui-list-item-content" href="{:url('admin/comment/showlist')}">评论列表</a>
+        </li>
+
+    </ul>
+</div>
+<div class="mdui-container-fluid" >
+    <div style="height: 88px;"></div>
+    {block name="body"}{/block}
+    </div>
+</div>
+</body>
+{include file="common/footer_js"}
+</html>

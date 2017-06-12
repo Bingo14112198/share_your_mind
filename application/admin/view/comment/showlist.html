@@ -1,0 +1,89 @@
+{extend name="base" /}
+{block name="body"}
+<div class="mdui-table-fluid">
+    <table class="mdui-table mdui-table-hoverable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>文章名</th>
+            <th>评论者</th>
+            <th>评论内容</th>
+            <th>禁言</th>
+            <th>状态</th>
+            <th>评论时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="comments" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td><a style="text-decoration: none;color: #333;" target="_blank" href="{:url('index/article/index',array('id'=>$vo.article_id))}">{$vo.article_name}</a></td>
+            <td>{$vo.user_name}</td>
+            <td >{$vo.comment}</td>
+            <td>
+                <i  class="mdui-icon material-icons comment-off mdui-text-color-deep-orange-accent" mdui-tooltip="{content:'禁言'}" uid="{$vo.user_id}">&#xe02b;</i>
+            </td>
+            <td>
+                {if condition="$vo.state eq 1 "}
+                <i  class="mdui-icon material-icons hide mdui-text-color-amber" mdui-tooltip="{content:'不可见'}" uid="{$vo.id}">&#xe8f5;</i>
+                {else /}
+                <i  class="mdui-icon material-icons show mdui-text-color-teal" uid="{$vo.id}" mdui-tooltip="{content:'显示'}">&#xe417;</i>
+                {/if}
+            </td>
+            <td>{$vo.time}</td>
+            <td>
+                <i class="mdui-icon material-icons del mdui-text-color-red" uid="{$vo.id}" mdui-tooltip="{content:'删除'}">&#xe872;</i>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<script src="__STATIC__/admin/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script>
+    $('.comment-off').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/comment/disable')}";
+        post(id,url);
+    });
+
+    $('.del').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/comment/del')}";
+        post(id,url);
+    });
+
+    //隐藏
+    $('.hide').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/comment/hide')}";
+        post(id,url);
+    });
+
+    //显示
+    //隐藏
+    $('.show').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/comment/show')}";
+        post(id,url);
+    });
+
+    function post(id,url) {
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var msg = data.msg;
+            if(data.state == 1){
+                layer.msg(msg,{icon:6,time:3000});
+            }else {
+                layer.msg(msg,{icon:6,time:3000});
+            }
+            setTimeout(function () {
+                location.href = "{:url('admin/comment/showlist')}"
+            },2000);
+        });
+    }
+</script>
+{/block}

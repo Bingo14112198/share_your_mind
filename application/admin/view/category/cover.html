@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分类封面</title>
+    <link rel="stylesheet" href="__STATIC__/admin/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="__STATIC__/bird.ico">
+</head>
+<body>
+<div class="container" style="padding-top: 5%">
+    <form action="" method="post" class="form-horizontal" role="form" enctype="multipart/form-data" >
+        <div class="form-group">
+            <label class="col-sm-2 control-label">分类图片</label>
+            <div class="col-sm-10">
+                <input required type="file" name="cover">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">旧封面</label>
+            <div class="col-sm-10">
+                <img src="__STATIC__/{$cover}" alt="">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success btn-lg">发布</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="__STATIC__/admin/js/jquery-3.2.1.min.js"></script>
+</body>
+</html>

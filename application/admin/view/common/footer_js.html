@@ -1,0 +1,16 @@
+<script src="__STATIC__/admin/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/mdui/js/mdui.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script src="__STATIC__/bootstrap/js/bootstrap.js"></script>
+<script>
+    var inst = new mdui.Menu('#open-menu','#menu',{position:'bottom'});
+    document.getElementById('open-menu').addEventListener('click',function () {
+        inst.open();
+    });
+
+    var draw = new mdui.Drawer('#drawer');
+    document.getElementById('open-draw').addEventListener('click',function () {
+        draw.toggle()
+    });
+
+</script>

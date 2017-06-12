@@ -1,0 +1,133 @@
+{extend name="base" /}
+{block name="body"}
+<div style="margin: 20px 0;">
+    <button class="mdui-btn add mdui-ripple"><i class="mdui-icon material-icons mdui-icon-left">&#xe7fe;</i>添加文章类型</button>
+</div>
+<div class="mdui-table-fluid">
+    <table class="mdui-table mdui-table-hoverable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>类型名称</th>
+            <th>封面</th>
+            <th>状态</th>
+            <th>类型描述</th>
+            <th>添加时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="cates" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.cate_name}</td>
+            <td><a target="_blank" href="{:url('admin/category/cover',array('id'=>$vo.id))}"><img src="__STATIC__/{$vo.cover}" style="width: 128px;height: 128px;" alt=""></a></td>
+            <td>
+                {if condition="$vo.state eq 1 "}
+                <span class="mdui-text-color-green">启用</span>
+                {else /}
+                <span class="mdui-text-color-amber">禁用</span>
+                {/if}
+            </td>
+            <td>{$vo.des}</td>
+            <td>{$vo.time | date="Y-m-d H:i:s",###}</td>
+            <td>
+                {if condition="$vo.state eq 1"}
+                <i  class="mdui-icon material-icons stop mdui-text-color-amber" mdui-tooltip="{content:'禁用'}" uid="{$vo.id}">&#xe857;</i>
+                {else /}
+                <i  class="mdui-icon material-icons start mdui-text-color-teal" uid="{$vo.id}" mdui-tooltip="{content:'启用'}">&#xe858;</i>
+                {/if}
+                <i  class="mdui-icon material-icons edit" mdui-tooltip="{content:'编辑'}" href="{:url('admin/category/edit',['id'=> $vo.id])}">&#xe3ae;</i>
+                <i class="mdui-icon material-icons del mdui-text-color-deep-orange" uid="{$vo.id}" mdui-tooltip="{content:'删除'}">&#xe872;</i>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<script src="__STATIC__/admin/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script>
+    $('button.add').click(function () {
+        layer.open({
+            type:2,
+            title:"添加类型",
+            shadeClose:false,
+            area:['60%','360px'],
+            content:"{:url('admin/category/add')}",
+            anim:2
+        });
+    });
+
+    //编辑
+    $('.edit').click(function () {
+        var url = $(this).attr('href');
+        layer.open({
+            type:2,
+            title:"修改类型",
+            shadeClose:false,
+            area:['60%','360px'],
+            content:url,
+            anim:2
+        });
+    });
+
+    //删除
+    $('.del').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/category/del')}";
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var msg= data.msg;
+            if(data.state == 1){
+                layer.msg(msg,{icon:6,time:3000});
+            }else {
+                layer.msg(msg,{icon:5,time:3000});
+            }
+            setTimeout(function () {
+                location.href = "{:url('admin/category/index')}"
+            },2000);
+        });
+    });
+
+    //禁用
+    $('.stop').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/category/stop')}";
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var msg = data.msg;
+            if(data.state == 1){
+                layer.msg(msg,{icon:6,time:3000});
+            }else {
+                layer.msg(msg,{icon:5,time:3000});
+            }
+
+            setTimeout(function () {
+                location.href = "{:url('admin/category/index')}"
+            },2000);
+        });
+    });
+    //启用
+    $('.start').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/category/start')}";
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var msg = data.msg;
+            if(data.state == 1){
+                layer.msg(msg,{icon:6,time:3000});
+            }else {
+                layer.msg(msg,{icon:5,time:3000});
+            }
+
+            setTimeout(function () {
+                location.href = "{:url('admin/category/index')}"
+            },2000);
+        });
+    });
+</script>
+{/block}

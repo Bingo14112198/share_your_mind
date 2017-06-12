@@ -1,0 +1,55 @@
+{extend name="base" /}
+{block name="body"}
+    <div>
+        <p style="font-weight: 700">
+            管理员名称：&nbsp;&nbsp;{$Request.session.admin}&nbsp;&nbsp;&nbsp;&nbsp;
+            登录次数：&nbsp;&nbsp;{$now.count}&nbsp;&nbsp;&nbsp;&nbsp;
+            上次登录时间：&nbsp;&nbsp;{$now.time | date="Y-m-d H:i:s", ###}</p>
+    </div>
+        <div class="mdui-table-fluid">
+            <table class="mdui-table mdui-table-hoverable">
+                <tbody>
+                <tr>
+                    <td>域名</td>
+                    <td>{$domain}</td>
+                </tr>
+                <tr>
+                    <td>IP地址</td>
+                    <td>{$ip}</td>
+                </tr>
+                <tr>
+                    <td>服务器地址</td>
+                    <td>{$config.url}</td>
+                </tr>
+                <tr>
+                    <td>文件根目录</td>
+                    <td>{$config.document_root}</td>
+                </tr>
+                <tr>
+                    <td>操作系统</td>
+                    <td>{$config.server_os}</td>
+                </tr>
+                <tr>
+                    <td>端口</td>
+                    <td>{$config.server_port}</td>
+                </tr>
+                <tr>
+                    <td>服务器软件</td>
+                    <td>{$config.server_soft}</td>
+                </tr>
+                <tr>
+                    <td>PHP版本</td>
+                    <td>{$config.php_version}</td>
+                </tr>
+                <tr>
+                    <td>MySQL版本</td>
+                    <td>{$config.mysql_version}</td>
+                </tr>
+                <tr>
+                    <td>上传文件限制</td>
+                    <td>{$config.max_upload_size}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+{/block}

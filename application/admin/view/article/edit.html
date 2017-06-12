@@ -1,0 +1,85 @@
+{extend name="base" /}
+{block name="body"}
+<form action="" method="post" class="form-horizontal" role="form" enctype="multipart/form-data" style="margin-left: -100px;">
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">文章标题</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" value="{$article.article_name}" name="article_name"  placeholder="请输入文章标题">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">文章作者</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" value="{$article.author}" name="author"  placeholder="请输入作者">
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">文章来源</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" value="{$article.from}" name="from"  placeholder="请输入作者">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">文章描述</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" name="des" rows="3">{$article.des}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">文章所属栏目</label>
+        <div class="col-sm-10">
+            <select class="form-control" name="cate_id">
+                <option value="0">请选择</option>
+                {volist name="cates" id="vo"}
+                <option {if condition="$article.cate_id eq $vo.id"} selected {/if} value="{$vo.id}">{$vo.cate_name}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">文章图片</label>
+        <div class="col-sm-10">
+            <input type="file" name="cover">
+            <img style="width: 300px;height: 300px;" src="__STATIC__/{$article.cover}" alt="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">作者头像(随便什么都可以)</label>
+        <div class="col-sm-10">
+            <input required type="file" name="author_cover">
+            <img style="width: 300px;height: 300px;" src="__STATIC__/{$article.author_cover}" alt="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">是否推荐</label>
+        <div class="col-sm-10">
+            <input type="checkbox" {if condition="$article.home eq 1"} checked {/if}  name="up" style="height: 20px;width: 20px;">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">是否启用</label>
+        <div class="col-sm-10">
+            <input type="checkbox" {if condition="$article.state eq 1"} checked {/if} name="state" style="height: 20px;width: 20px;">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">文章内容</label>
+        <div class="col-sm-10">
+            <textarea  id="content" name="content">{$article.content}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">发布</button>
+        </div>
+    </div>
+</form>
+<script src="__STATIC__/admin/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/ueditor/ueditor.config.js"></script>
+<script src="__STATIC__/ueditor/ueditor.all.min.js"></script>
+<script src="__STATIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+<link rel="stylesheet" href="__STATIC__/admin/css/bootstrap.min.css">
+<script>
+    UE.getEditor('content',{initialFrameWidth:1000,initialFrameHeight:400});
+</script>
+{/block}

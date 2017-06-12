@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="__STATIC__/mdui/css/mdui.min.css">
+    <link rel="stylesheet" href="__STATIC__/admin/css/login.css">
+    <script src="__STATIC__/mdui/js/mdui.min.js"></script>
+</head>
+<body class="mdui-theme-layout-dark ">
+<div  style="height: 400px;width:600px;vertical-align: middle;position: fixed;left: 50%;top: 50%;margin-left:-300px;margin-top: -200px;">
+    <form action="" method="post" style="width: 80%;margin: 0 auto;">
+        <div class="mdui-textfield mdui-textfield-floating-label mdui-ripple">
+            <i class="mdui-icon material-icons" style="font-size: 30px;">&#xe87c;</i>
+            <label class="mdui-textfield-label">姓名</label>
+            <input type="text" class="mdui-textfield-input " name="admin">
+        </div>
+        <div class="mdui-textfield mdui-textfield-floating-label mdui-ripple">
+            <i class="mdui-icon material-icons" style="font-size: 30px;">&#xe63f;</i>
+            <label class="mdui-textfield-label">密码</label>
+            <input type="text" class="mdui-textfield-input" name="password">
+        </div>
+        <div class="mdui-ripple">
+            <div class="mdui-textfield mdui-textfield-floating-label" style="float: left;">
+                <i class="mdui-icon material-icons" style="font-size: 30px;">&#xe40b;</i>
+                <label class="mdui-textfield-label">验证码</label>
+                <input type="text" class="mdui-textfield-input" name="code" style="display: inline-block;">
+            </div>
+            <div class="mdui-textfield mdui-textfield-floating-label " style="float: left;">
+                <img src="{:captcha_src()}" alt="captcha" onclick="this.src='{:captcha_src()}'" style="display: inline-block;background: transparent;"/>
+            </div>
+        </div>
+        <div  style="clear: both;margin-top: 10px;">
+            <button class="mdui-btn mdui-btn-block mudi-btn-raised mdui-color-teal mdui-ripple" style="height: 50px;" type="submit">登录</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

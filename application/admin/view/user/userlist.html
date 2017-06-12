@@ -1,0 +1,113 @@
+{extend name="base" /}
+{block name="body"}
+<div style="margin: 20px 0;">
+    <button class="mdui-btn add mdui-ripple"><i class="mdui-icon material-icons mdui-icon-left">&#xe7fe;</i>添加用户</button>
+</div>
+<div class="mdui-table-fluid">
+    <table class="mdui-table mdui-table-hoverable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>管理员</th>
+            <th>状态</th>
+            <th>评论状态</th>
+            <th>登录次数</th>
+            <th>上次登录时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="user" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.user_name}</td>
+            <td>
+                {if condition="$vo.state eq 1 "}
+                <i  class="mdui-icon material-icons stop mdui-text-color-amber" mdui-tooltip="{content:'禁用'}" uid="{$vo.id}">&#xe612;</i>
+                {else /}
+                <i  class="mdui-icon material-icons start mdui-text-color-teal" uid="{$vo.id}" mdui-tooltip="{content:'启用'}">&#xe84e;</i>
+                {/if}
+            </td>
+            <td>
+                {if condition="$vo.allow_comment eq 1 "}
+                <i  class="mdui-icon material-icons disable  mdui-text-color-teal" uid="{$vo.id}" mdui-tooltip="{content:'允许'}">&#xe029;</i>
+                {else /}
+                <i  class="mdui-icon material-icons enable  mdui-text-color-amber" mdui-tooltip="{content:'被禁言'}" uid="{$vo.id}">&#xe02b;</i>
+                {/if}
+            </td>
+            <td>{$vo.count}</td>
+            <td>{$vo.time}</td>
+            <td>
+                <i class="mdui-icon material-icons del mdui-text-color-deep-orange" uid="{$vo.id}" mdui-tooltip="{content:'删除'}">&#xe872;</i>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<script src="__STATIC__/admin/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script>
+    $('button.add').click(function () {
+        layer.open({
+            type:2,
+            title:"添加",
+            shadeClose:false,
+            area:['50%','300px'],
+            content:"{:url('admin/user/add')}",
+            anim:2
+        });
+    });
+
+    //删除
+    $('.del').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/user/del')}";
+        deal(id,url);
+    });
+
+    //禁用
+    $('.stop').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/user/stop')}";
+        deal(id,url);
+    });
+    //启用
+    $('.start').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/user/start')}";
+        deal(id,url);
+    });
+
+    //禁言
+    $('.disable').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/user/disable')}";
+        deal(id,url);
+    });
+
+    //允许
+    $('.enable').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/user/enable')}";
+        deal(id,url);
+    });
+
+    function deal(id,url) {
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var msg = data.msg;
+            if(data.state == 1){
+                layer.msg(msg,{icon:6,time:3000});
+            }else {
+                layer.msg(msg,{icon:5,time:3000});
+            }
+
+            setTimeout(function () {
+                location.href = "{:url('admin/user/userlist')}"
+            },2000);
+        });
+    }
+</script>
+{/block}

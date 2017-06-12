@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="__STATIC__/mdui/css/mdui.min.css">
+</head>
+<body>
+<div style="padding: 20px;">
+    <div class="mdui-textfield">
+        <i class="mdui-icon material-icons">&#xe7fd;</i>
+        <input type="text" id="name" class="mdui-textfield-input" placeholder="用户名">
+    </div>
+    <div class="mdui-textfield">
+        <i class="mdui-icon material-icons">&#xe60e;</i>
+        <input type="text" id="password" class="mdui-textfield-input" placeholder="密码">
+    </div>
+    <div class="mdui-col">
+        <label class="mdui-switch">状态&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="checkbox" id="state" checked>
+            <i class="mdui-switch-icon"></i>
+        </label>
+    </div>
+    <div class="mdui-textfield" style="padding-left: 50px;">
+        <button id="submit" class="mdui-btn  mdui-color-green mdui-ripple">Submit</button>
+    </div>
+</div>
+<script src="__STATIC__/admin/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/mdui/js/mdui.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script>
+    $('#submit').click(function () {
+        var user_name = $('#name').val();
+        var password = $('#password').val();
+        var state = $('#state').is(':checked');
+        var url = "{:url('admin/user/add')}";
+        $.post(url,{
+            'user_name':user_name,
+            'password':password,
+            'state':state
+        },function (data) {
+            var msg = data.msg;
+            if(data.state == 1){
+                layer.msg(msg,{icon:6,time:3000});
+            }else {
+                layer.msg(msg,{icon:5,time:3000});
+            }
+            setTimeout(function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+                location.href = "{:url('admin/user/userlist')}";
+            },2000)
+        });
+    });
+</script>
+</body>
+</html>
