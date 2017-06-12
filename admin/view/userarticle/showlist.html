@@ -1,0 +1,117 @@
+{extend name="base" /}
+{block name="body"}
+<div style="margin: 20px 0;">
+</div>
+<div class="mdui-table-fluid">
+    <table class="mdui-table mdui-table-hoverable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>文章名</th>
+            <th>文章作者</th>
+            <th>封面</th>
+            <th>分配栏目</th>
+            <th>状态</th>
+            <th>推荐</th>
+            <th>点击数</th>
+            <th>添加时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="user_articles" id="vo"}
+        <tr style="height: 200px;">
+            <td>{$vo.id}</td>
+            <td><a style="text-decoration: none;color: #333;" target="_blank" href="{:url('index/article/index',array('id'=>$vo.id))}">{$vo.article_name}</a></td>
+            <td>{$vo.author}</td>
+            <td ><a target="_blank" href="{:url('index/article/index',array('id'=>$vo.id))}"><img style="height: 200px;width:200px;" src="__STATIC__/{$vo.cover}" alt=""></a></td>
+            <td>
+                {volist name="cate" id="voo"}
+                {if condition="$vo.cate_id eq $voo.id"}
+                <span>{$voo.cate_name}</span>
+                {/if}
+                {/volist}
+                <i href="{:url('admin/userarticle/cates',array('id'=>$vo.id))}"  class="mdui-icon material-icons cates  mdui-text-color-green" mdui-tooltip="{content:'分配类型'}" uid="{$vo.id}">&#xe332;</i></td>
+            <td>
+                {if condition="$vo.state eq 1 "}
+                <i  class="mdui-icon material-icons wait mdui-text-color-deep-orange-accent" mdui-tooltip="{content:'待审核'}" uid="{$vo.id}">&#xe8db;</i>
+                {else /}
+                <i  class="mdui-icon material-icons pass mdui-text-color-green" mdui-tooltip="{content:'通过审核'}" uid="{$vo.id}">&#xe8dc;</i>
+                {/if}
+            </td>
+            <td>
+                {if condition="$vo.home eq 1"}
+                <i  class="mdui-icon material-icons drawback mdui-text-color-deep-orange-accent" mdui-tooltip="{content:'撤销'}" uid="{$vo.id}">&#xe811;</i>
+                {else /}
+                <i  class="mdui-icon material-icons up mdui-text-color-green" mdui-tooltip="{content:'推送'}" uid="{$vo.id}">&#xe813;</i>
+                {/if}
+            </td>
+            <td>{$vo.click}</td>
+            <td>{$vo.time}</td>
+            <td>
+                <i  class="mdui-icon material-icons stop" mdui-tooltip="{content:'编辑'}">
+                    <a href="{:url('admin/article/edit',['id'=> $vo.id])}" style="text-decoration: none;">&#xe3ae;</a>
+                </i>
+                <i class="mdui-icon material-icons del mdui-text-color-red" uid="{$vo.id}" mdui-tooltip="{content:'删除'}">&#xe872;</i>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<script src="__STATIC__/admin/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script>
+    $('.wait').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/userarticle/wait')}";
+        post(id,url);
+    });
+
+    $('.pass').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/userarticle/pass')}";
+        post(id,url);
+    });
+
+    $('.drawback').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/userarticle/drawback')}";
+        post(id,url);
+    });
+
+    $('.up').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/userarticle/home')}";
+        post(id,url);
+    });
+
+    //分配文章类型
+    $('.cates').click(function () {
+        var url = $(this).attr('href');
+        layer.open({
+            type:2,
+            title:"文章分类",
+            shadeClose:false,
+            area:['50%','300px'],
+            content:url,
+            anim:2
+        });
+    });
+    function post(id,url) {
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var msg = data.msg;
+            if(data.state == 1){
+                layer.msg(msg,{icon:6,time:3000});
+            }else {
+                layer.msg(msg,{icon:6,time:3000});
+            }
+            setTimeout(function () {
+                location.href = "{:url('admin/userarticle/showlist')}"
+            },2000);
+        });
+    }
+</script>
+{/block}

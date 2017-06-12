@@ -1,0 +1,108 @@
+{extend name="base" /}
+{block name="body"}
+<div style="margin: 20px 0;">
+    <button class="mdui-btn add mdui-ripple">
+        <i class="mdui-icon material-icons mdui-icon-left">&#xe7fe;</i>
+        <a href="{:url('admin/article/add')}" style="text-decoration: none;">添加文章</a>
+    </button>
+</div>
+<div class="mdui-table-fluid">
+    <table class="mdui-table mdui-table-hoverable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>文章名</th>
+            <th>文章作者</th>
+            <th>封面</th>
+            <th>文章分类</th>
+            <th>状态</th>
+            <th>推荐</th>
+            <th>点击数</th>
+            <th>添加时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="articles" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td><a style="text-decoration: none;color: #333;" target="_blank" href="{:url('index/article/index',array('id'=>$vo.id))}">{$vo.article_name}</a></td>
+            <td>{$vo.author}</td>
+            <td ><a target="_blank" href="{:url('index/article/index',array('id'=>$vo.id))}"><img style="height: 200px;width:200px;" src="__STATIC__/{$vo.cover}" alt=""></a></td>
+            <td>
+                {volist name="cate" id="voo"}
+                {if condition="$vo.cate_id eq $voo.id"}
+                {$voo.cate_name}
+                {/if}
+                {/volist}
+            </td>
+            <td>
+                {if condition="$vo.state eq 1 "}
+                <i  class="mdui-icon material-icons stop mdui-text-color-deep-orange-accent" mdui-tooltip="{content:'禁用'}" uid="{$vo.id}">&#xe8db;</i>
+                {else /}
+                <i  class="mdui-icon material-icons start mdui-text-color-green" mdui-tooltip="{content:'启用'}" uid="{$vo.id}">&#xe8dc;</i>
+                {/if}
+            </td>
+            <td>
+                {if condition="$vo.home eq 1"}
+                <i  class="mdui-icon material-icons drawback mdui-text-color-deep-orange-accent" mdui-tooltip="{content:'撤销'}" uid="{$vo.id}">&#xe811;</i>
+                {else /}
+                <i  class="mdui-icon material-icons up mdui-text-color-green" mdui-tooltip="{content:'推送'}" uid="{$vo.id}">&#xe813;</i>
+                {/if}
+            </td>
+            <td>{$vo.click}</td>
+            <td>{$vo.time}</td>
+            <td>
+                <i  class="mdui-icon material-icons stop" mdui-tooltip="{content:'编辑'}">
+                    <a href="{:url('admin/article/edit',['id'=> $vo.id])}" style="text-decoration: none;">&#xe3ae;</a>
+                </i>
+                <i class="mdui-icon material-icons del mdui-text-color-red" uid="{$vo.id}" mdui-tooltip="{content:'删除'}">&#xe872;</i>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<script src="__STATIC__/admin/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script>
+    $('.stop').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/article/stop')}";
+        post(id,url);
+    });
+
+    $('.start').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/article/start')}";
+        post(id,url);
+    });
+
+    $('.drawback').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/article/drawback')}";
+        post(id,url);
+    });
+
+    $('.up').click(function () {
+        var id = $(this).attr('uid');
+        var url = "{:url('admin/article/home')}";
+        post(id,url);
+    });
+    function post(id,url) {
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var msg = data.msg;
+            if(data.state == 1){
+                layer.msg(msg,{icon:6,time:3000});
+            }else {
+                layer.msg(msg,{icon:6,time:3000});
+            }
+            setTimeout(function () {
+                location.href = "{:url('admin/article/showlist')}"
+            },2000);
+        });
+    }
+</script>
+{/block}
