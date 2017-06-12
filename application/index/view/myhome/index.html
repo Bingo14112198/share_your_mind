@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=" viewport" content="width=device-width   initial-scale=1.0  minimum-scale=1.0  miximum=1.0  user-scalable=yes"/>
+    <title>山林小猎人</title>
+    <script src="__STATIC__/index/js/jquery-3.1.1.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="__STATIC__/bird.ico">
+    <link rel="stylesheet" href="__STATIC__/index/css/myhome.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/nprogress.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/mdui/css/mdui.min.css">
+</head>
+<body>
+<div class="container" id="top">
+    <div class="nav navbar-right">
+        <nav class="navbar" role="navigation">
+            <div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="width: 80px;margin-left: -60px;">
+                                &nbsp;&nbsp;<img src="__STATIC__/{$Request.session.user_head}" alt="" style="width: 40px;height: 40px;border-radius: 50%;margin-top: -20px;">
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{:url('index/myhome/index')}">我的主页</a></li>
+                                <li><a href="{:url('index/myhome/index')}">收藏的文章</a></li>
+                                <li><a href="{:url('index/myhome/index')}">喜欢的文章</a></li>
+                                <li><a href="{:url('index/mymoney/index')}">我的打赏</a></li>
+                                <li><a href="{:url('index/setting/index')}">设置</a></li>
+                                <li><a href="{:url('index/login/logout')}">退出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="note">
+        <div class="post">
+            <div class="show-content">
+                <div class="list-container">
+                    <div class="main-top">
+                        <a href="{:url('index/setting/index')}" class="avatar">
+                            <img src="__STATIC__/{$Request.session.user_head}" alt="">
+                        </a>
+                        <div class="title">
+                            <a class="name"  href="{:url('index/myhome/index')}">{$Request.session.user_name}</a>
+                        </div>
+                        <div class="info">
+                            <ul style="margin-left: -40px;margin-top: -10px;">
+                                <li>
+                                    <div class="meta-block">
+                                        <a href="" style="color: #969696;">
+                                            <p style="margin-bottom: -5px;margin-top:-10px;font-size: 15px;color: #333;">{$focus_num}</p>
+                                            关注
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="meta-block">
+                                        <a href="" style="color: #969696;">
+                                            <p style="margin-bottom: -5px;margin-top:-10px;font-size: 15px;color: #333;">{$my_num}</p>
+                                            文章
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="meta-block">
+                                        <a href="" style="color: #969696;">
+                                            <p style="margin-bottom: -5px;margin-top:-10px;font-size: 15px;color: #333;">{$collection_num}</p>
+                                            收藏
+                                        </a>
+                                    </div>
+                                </li>
+                                <li><div class="meta-block">
+                                    <a href="" style="color: #969696;">
+                                        <p style="margin-bottom: -5px;margin-top:-10px;font-size: 15px;color: #333;">{$like_num}</p>
+                                        喜欢
+                                    </a>
+                                </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="mdui-tab mdui-tab-centered mdui-tab-full-width  " mdui-tab>
+                            <a href="#myarticle" class="mdui-ripple mdui-tab-active">
+                                <i class="mdui-icon material-icons ">&#xe90d;</i>
+                                <label>我的文章</label>
+                            </a>
+                            <a href="#mylike" class="mdui-ripple mdui-tab-active">
+                                <i class="mdui-icon material-icons ">&#xe87d;</i>
+                                <label>喜欢</label>
+                            </a>
+                            <a href="#mycollection" class="mdui-ripple mdui-tab-active">
+                                <i class="mdui-icon material-icons ">&#xe2bc;</i>
+                                <label>我的收藏</label>
+                            </a>
+                            <a href="#myfocus" class="mdui-ripple mdui-tab-active">
+                                <i class="mdui-icon material-icons ">&#xe8d0;</i>
+                                <label>我的关注</label>
+                            </a>
+                        </div>
+                        <div id="myarticle" class="mdui-p-a-2">
+                            <ul class="note-list">
+                                {volist name="articles" id="vo"}
+                                <li>
+                                    <a class="wrap-img" href="{:url('index/article/index',array('id'=>$vo.id))}" target="_blank">
+                                        {if condition="$vo.cover neq ''"}
+                                        <img src="__STATIC__/{$vo.cover}" alt="">
+                                        {/if}
+                                    </a>
+                                    <div class="content">
+                                        <div class="author">
+                                            <a class="avatar" target="_blank" href="{:url('index/article/index',array('id'=>$vo.id))}">
+                                                {if condition="$vo.author_cover neq ''"}
+                                                <img src="__STATIC__/{$vo.author_cover}" alt="">
+                                                {else /}
+                                                <img src="__STATIC__/author_cover/base_author_cover" alt="">
+                                                {/if}
+                                            </a>
+                                            <div class="name">
+                                                <a href="">{$vo.author}</a>
+                                                <span>{$vo.time}</span>
+                                            </div>
+
+                                        </div>
+                                        <a class="title" href="{:url('index/article/index',array('id'=>$vo.id))}">{$vo.article_name}
+                                            {if condition="$vo.state eq 0"}
+                                            <span class="badge" style="color: #FFEB3B;">待审核</span>
+                                            {/if}
+                                        </a>
+                                        <p class="abstract">
+                                            <a href="{:url('index/article/index',array('id'=>$vo.id))}">{$vo.des}</a>
+                                        </p>
+                                        <div class="meta">
+                                            <i class="glyphicon glyphicon-eye-open">&nbsp;{$vo.click}</i>
+                                            <i class="glyphicon glyphicon-comment">&nbsp;{$vo.comment_num}</i>
+                                            <i class="glyphicon glyphicon-heart">&nbsp;{$vo.like}</i>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                {/volist}
+                            </ul>
+                        </div>
+                        <div id="mycollection" class="mdui-p-a-2">
+                            <ul class="note-list">
+                                {volist name="collection" id="vo"}
+                                <li id="collectid{$vo.id}">
+                                    <a class="wrap-img" href="{:url('index/article/index',array('id'=>$vo.id))}" target="_blank">
+                                        {if condition="$vo.cover neq ''"}
+                                        <img src="__STATIC__/{$vo.cover}" alt="">
+                                        {/if}
+                                    </a>
+                                    <div class="content">
+                                        <div class="author">
+                                            <a class="avatar" target="_blank" href="{:url('index/article/index',array('id'=>$vo.id))}">
+                                                {if condition="$vo.author_cover neq ''"}
+                                                <img src="__STATIC__/{$vo.author_cover}" alt="">
+                                                {else /}
+                                                <img src="__STATIC__/author_cover/base_author_cover" alt="">
+                                                {/if}
+                                            </a>
+                                            <div class="name">
+                                                <a href="">{$vo.author}</a>
+                                                <span>{$vo.time}</span>
+                                            </div>
+
+                                        </div>
+                                        <a class="title" href="{:url('index/article/index',array('id'=>$vo.id))}">{$vo.article_name}</a>
+                                        <p class="abstract">
+                                            <a href="{:url('index/article/index',array('id'=>$vo.id))}">{$vo.des}</a>
+                                        </p>
+                                        <div class="meta">
+                                            <i class="glyphicon glyphicon-eye-open">&nbsp;{$vo.click}</i>
+                                            <i class="glyphicon glyphicon-comment">&nbsp;{$vo.comment_num}</i>
+                                            <i class="glyphicon glyphicon-heart">&nbsp;{$vo.like}</i>
+                                            <span collectid="{$vo.id}" class="badge collect-badge" style="color: #FFEB3B;cursor: pointer;">取消收藏</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                {/volist}
+                            </ul>
+                        </div>
+                        <div id="mylike" class="mdui-p-a-2">
+                            <ul class="note-list">
+                                {volist name="like" id="vo"}
+                                <li id="likeid{$vo.id}">
+                                    <a class="wrap-img" href="{:url('index/article/index',array('id'=>$vo.id))}" target="_blank">
+                                        {if condition="$vo.cover neq ''"}
+                                        <img src="__STATIC__/{$vo.cover}" alt="">
+                                        {/if}
+                                    </a>
+                                    <div class="content">
+                                        <div class="author">
+                                            <a class="avatar" target="_blank" href="{:url('index/article/index',array('id'=>$vo.id))}">
+                                                {if condition="$vo.author_cover neq ''"}
+                                                <img src="__STATIC__/{$vo.author_cover}" alt="">
+                                                {else /}
+                                                <img src="__STATIC__/author_cover/base_author_cover" alt="">
+                                                {/if}
+                                            </a>
+                                            <div class="name">
+                                                <a href="">{$vo.author}</a>
+                                                <span>{$vo.time}</span>
+                                            </div>
+
+                                        </div>
+                                        <a class="title" href="{:url('index/article/index',array('id'=>$vo.id))}">{$vo.article_name}</a>
+                                        <p class="abstract">
+                                            <a href="{:url('index/article/index',array('id'=>$vo.id))}">{$vo.des}</a>
+                                        </p>
+                                        <div class="meta">
+                                            <i class="glyphicon glyphicon-eye-open">&nbsp;{$vo.click}</i>
+                                            <i class="glyphicon glyphicon-comment">&nbsp;{$vo.comment_num}</i>
+                                            <i class="glyphicon glyphicon-heart">&nbsp;{$vo.like}</i>
+                                            <span likeid="{$vo.id}" class="badge like-badge" style="color: #FFEB3B;cursor: pointer;">取消喜欢</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                {/volist}
+                            </ul>
+                        </div>
+                        <div id="myfocus" class="mdui-p-a-2">
+                            <ul class="note-list">
+                                {volist name="focus" id="vo"}
+                                <li id="focus{$vo.id}">
+                                    <div class="content">
+                                        <div class="author">
+                                            <a class="avatar" target="_blank" >
+                                                <img src="__STATIC__/{$Request.session.user_head}" alt="">
+                                            </a>
+                                            <div class="name">
+                                                <a href="" style="font-size: 20px;">{$Request.session.user_name}</a>
+                                                <span>关注了作者</span>
+                                                <span>{$vo.time}</span>
+                                            </div>
+                                        </div>
+                                        <div class="follow-detail">
+                                            <div class="info">
+                                                <a href="" class="avatar"><img src="__STATIC__/{$vo.target_head}" alt=""></a>
+                                                <a fid="{$vo.id}"  class="btn btn-default following remove-focus" mdui-tooltip="{content:'点击取消'}">
+                                                    <span>已关注</span>
+                                                </a>
+                                                <a href="" style="color: #969696;">{$vo.target_name}</a>
+                                                <p>写了 <span>{$vo.target_article}</span> 篇文章，被 {$vo.target_focus} 个人关注，获得 <span>{$vo.target_like}</span> 个喜欢</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                {/volist}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-show">
+        <button data-container="body" data-toggle="popover" data-placement="right" data-content="列表在这哦" data-trigger="hover" class=" btn btn-default"><span class="glyphicon glyphicon-list"></span></button>
+    </div>
+    <div class="menu-content" id="side-menu" style="overflow:auto;">
+        <div class="menu-list">
+            <h4 style="font-size: 18px;margin-top: 10px;margin-bottom: 10px;">Little Trouble Maker</h4>
+            <h4 style="font-size: 18px;margin-top: 10px;margin-bottom: 10px;">And</h4>
+            <h4 style="font-size: 18px;margin-top: 10px;margin-bottom: 10px;">Big Trouble Maker</h4>
+            <h4></h4>
+            <ul style="padding-left: 0;">
+                <li style="text-align: center;font-size: 18px;"><a href="{:url('index/index/index')}">首页</a></li>
+                <li style="text-align: center;font-size: 18px;"><a target="_blank" href="{:url('index/write/index')}">写文章</a></li>
+                {volist name="cates" id="vo"}
+                <li style="text-align: center;font-size: 18px;"><a href="{:url('index/cates/index',array('id'=>$vo.id))}">{$vo.cate_name}</a></li>
+                {/volist}
+            </ul>
+            <form action="{:url('index/search/index')}" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control search" placeholder="请输入关键词" name="keywords">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div   >
+    <div style="margin: 0 auto;vertical-align:middle;text-align: center;padding: 13px;">Copyright @ 2017 Zbingo.me &nbsp;&nbsp;&nbsp;&nbsp;陕ICP备：17007989号</div>
+</div>
+<script>
+    //取消喜欢
+    $('.like-badge').click(function () {
+        var id = $(this).attr('likeid');
+        var url = "{:url('index/myhome/removelike')}";
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var mes = data.mes;
+            if(data.state == 1){
+                var likeid = '#likeid' + id;
+                $(likeid).slideUp(500);
+            }else {
+                layer.msg(mes,{icon:5,time:3000});
+            }
+        })
+    });
+    //取消关注
+    $('.collect-badge').click(function () {
+        var id = $(this).attr('collectid');
+        var url = "{:url('index/myhome/removecollect')}";
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var mes = data.mes;
+            if(data.state == 1){
+                var cid = "#collectid" + id;
+                $(cid).slideUp(500);
+            }else {
+                layer.msg(mes,{icon:5,time:3000});
+            }
+        });
+    });
+    //取消关注
+    $('.remove-focus').click(function () {
+        var id = $(this).attr('fid');
+        var url = "{:url('index/myhome/removefocus')}";
+        $.post(url,{
+            'id':id
+        },function (data) {
+            var mes = data.mes;
+            if(data.state == 1){
+                var fid = '#focus' + id;
+                $(fid).slideUp(500);
+            }else {
+                layer.msg(mes,{icon:5,time:3000});
+            }
+        });
+    });
+</script>
+<script src="__STATIC__/mdui/js/mdui.min.js"></script>
+<script src="__STATIC__/index/js/bootstrap.min.js"></script>
+<script src="__STATIC__/index/js/canvas-nest.min.js" color="234,111,90" opacity="0.3" zIndex="-134" ></script>
+<script src="__STATIC__/index/js/nprogress.js"></script>
+<script src="__STATIC__/index/js/myhome.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+<script>tpwidget("init", {
+    "flavor": "bubble",
+    "location": "WX4FBXXFKE4F",
+    "geolocation": "enabled",
+    "position": "bottom-right",
+    "margin": "0px 0px",
+    "language": "zh-chs",
+    "unit": "c",
+    "theme": "chameleon",
+    "uid": "U676968700",
+    "hash": "358cdcce89730edf2ec9d83787748129"
+});
+tpwidget("show");</script>
+
+</body>
+
+</html>

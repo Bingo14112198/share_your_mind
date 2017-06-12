@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="__STATIC__/index/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/login.css"/>
+    <link rel="shortcut icon" type="image/x-icon" href="__STATIC__/bird.ico">
+    <link rel="stylesheet" href="__STATIC__/index/css/nprogress.css">
+</head>
+<body>
+<div class="wrapper">
+    <div class="wrapper-inner">
+        <div class="inner">
+            <div class="content">
+                <h2><a class="log">登录</a>&nbsp;<b>.</b>&nbsp;<a class="reg">注册</a></h2>
+                <div class="img"><img src="__STATIC__/index/img/lieren.jpg" alt=""></div>
+                <div class="login">
+                    <div action="{:url('index/login/login')}" method="post" class="bs-example bs-example-form" role="form">
+                        <div class="input-group">
+                            <span class="input-group-addon"> <span class="glyphicon glyphicon-user"></span></span>
+                            <input required type="text" class="form-control name" placeholder="你的昵称">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                            <input required type="password" class="form-control password" placeholder="密码">
+                        </div>
+                        <br>
+                        <button class="btn btn-success submit btn-lg btn-block">登录</button>
+                    </div>
+                </div>
+                <div class="register">
+                    <div class="bs-example bs-example-form"   >
+                        <div class="input-group">
+                            <span class="input-group-addon"> <span class="glyphicon glyphicon-user"></span></span>
+                            <input required type="text" class="form-control name2"   placeholder="你的昵称">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                            <input required type="password" class="form-control password2"  placeholder="密码">
+                        </div>
+                        <br>
+                        <button class="btn btn-primary submit2  btn-lg btn-block">注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+<script>tpwidget("init", {
+    "flavor": "bubble",
+    "location": "WX4FBXXFKE4F",
+    "geolocation": "enabled",
+    "position": "bottom-right",
+    "margin": "0px 0px",
+    "language": "zh-chs",
+    "unit": "c",
+    "theme": "chameleon",
+    "uid": "U676968700",
+    "hash": "358cdcce89730edf2ec9d83787748129"
+});
+tpwidget("show");</script>
+</body>
+<script src="__STATIC__/index/js/jquery-3.1.1.js"></script>
+<script src="__STATIC__/index//js/nprogress.js"></script>
+<script src="__STATIC__/index/js/login.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+<script>
+    //登录
+    $('.submit').click(function () {
+        var user_name = $('.name').val();
+        var password = $('.password').val();
+        var url = "{:url('index/login/login')}";
+        $.post(url,{
+            'user_name':user_name,
+            'password' : password
+        },function (data) {
+            var mes = data.mes;
+            if(data.state == 1){
+                layer.msg(mes);
+                setTimeout(function () {
+                    location.href = "{:url('index/index/index')}"
+                },2000);
+            }else if (data.state == 2){
+                layer.msg(mes);
+                setTimeout(function () {
+                    location.href = "{:url('index/login/login')}"
+                },2000);
+            }else {
+                layer.msg(mes);
+                setTimeout(function () {
+                    location.href = "{:url('index/login/login')}"
+                },2000);
+            }
+        });
+    });
+
+
+    $('.submit2').click(function () {
+        var name = $('.name2').val();
+        var password = $('.password2').val();
+        var url = "{:url('index/login/register')}";
+        $.post(url,{
+            'user_name':name,
+            'password':password
+        },function (data) {
+            var mes = data.mes;
+            if(data.state == 1){
+                layer.msg(mes);
+                setTimeout(function () {
+                    location.href = "{:url('index/index/index')}"
+                },2000);
+            }else{
+                layer.msg(mes);
+                setTimeout(function () {
+                    location.href = "{:url('index/login/login')}"
+                },2000);
+            }
+
+
+        });
+    });
+</script>
+</html>

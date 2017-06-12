@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=" viewport" content="width=device-width   initial-scale=1.0  minimum-scale=1.0  miximum=1.0  user-scalable=yes"/>
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=480px, user-scalable=no">
+    <title>山林小猎人</title>
+    <script src="__STATIC__/index/js/jquery-3.1.1.js"></script>
+    <link rel="stylesheet" href="__STATIC__/index/css/index.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/index/css/nprogress.css">
+    <link rel="shortcut icon" type="image/x-icon" href="__STATIC__/bird.ico">
+    <script src="__STATIC__/index/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div >
+    <div id="left" >
+        <div class="content">
+            <div class="content-inner">
+                <h3>山林小猎人</h3>
+                <h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    顽皮的原始人--小刚随父母在野外生活，一个偶然的机会，他和可爱的大猩猩成了形影不离的好朋友。为了使小刚成为真正的原始人，一家人历经磨难，他们于北极历险、与凶猛的长毛象展开厮杀、遭遇飞碟、感受地狱之旅、拯救美人鱼</h6>
+                <h6>Little trouble maker and Big trouble maker</h6>
+            </div>
+        </div>
+    </div>
+    <div id="right">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div>
+                    <form class="navbar-form navbar-right" action="{:url('index/search/index')}" method="post" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="请输入关键词" name="keywords">
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-nav navbar-left">
+                    {if condition="$Request.session.user_name eq ''"}
+                    <li><a href="{:url('index/login/login')}"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                    <li><a href="{:url('index/login/login')}"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                    {else /}
+                    <li class="dropdown navbar-right" >
+                        <a title="{$Request.session.user_name}" href="{:url('index/myhome/index')}" style="font-size: 18px;" class="dropdown-toggle" data-toggle="dropdown">
+                            {$Request.session.user_name}<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{:url('index/myhome/index')}">我的主页</a></li>
+                            <li><a href="{:url('index/myhome/index')}">收藏的文章</a></li>
+                            <li><a href="{:url('index/myhome/index')}">喜欢的文章</a></li>
+                            <li><a href="{:url('index/mymoney/index')}">我的打赏</a></li>
+                            <li><a href="{:url('index/setting/index')}">设置</a></li>
+                            <li><a href="{:url('index/login/logout')}">退出</a></li>
+                        </ul>
+                    </li>
+                    <li><a target="_blank" href="{:url('index/write/index')}" class="btn " style="line-height: 6px;border-radius: 4px;margin: 6px 16px 0;color: #fff;background-color: #ea6f5a;">写文章</a></li>
+                    {/if}
+
+                </ul>
+            </div>
+        </nav>
+        <div class="cate" style="margin-bottom: 20px;padding-left: 2em;">
+            {volist name="cates" id="vo"}
+            <a href="{:url('index/cates/index',array('id'=>$vo.id))}" target="_blank" class="category">
+                <img src="__STATIC__/{$vo.cover}" alt="" style="">
+                <div class="name">{$vo.cate_name}</div>
+            </a>
+            {/volist}
+        </div>
+        <div class="main">
+
+            {volist name="article" id="vo"}
+            <section class="section1">
+                <div class="article-head">
+                    {$vo.author}&nbsp;&nbsp;/&nbsp;&nbsp;{$vo.from}&nbsp;&nbsp;{$vo.time}
+                </div>
+                <div class="article-body">
+                    <h4><a href="{:url('index/article/index',array('id'=>$vo.id))}" style="text-decoration: none;color: #333;">{$vo.article_name}</a></h4>
+                    <p><a href="{:url('index/article/index',array('id'=>$vo.id))})}" style="text-decoration: none;color: #333;">{$vo.des}</a></p>
+                    <small>阅读 &nbsp;&nbsp;{$vo.click}<em>&nbsp;.&nbsp;</em>&nbsp;&nbsp;评论数&nbsp;&nbsp;{$vo.comment_num}<em>.</em></small>
+                </div>
+            </section>
+            {/volist}
+            <div style="text-align: right;font-size: 20px;">
+                {$article->render()}
+            </div>
+
+            <div class="footer">
+                <div class="copyright">
+                    <p><strong>友情链接</strong></p>
+                    <p><a href="http://zbingo.me/blog/public/index.php" target="_blank">山林小猎人的技术博客</a></p>
+                    <p><a href="http://zbingo.me/mall/public/index.php/admin/login/index.html" target="_blank">商城后台管理系统 &nbsp;&nbsp;<span style="font-weight: 600;">账户：test 密码：123456</span></a></p>
+                    <p>本站上的文章版权归作者所有，如若侵权，请联系我们1055035266@qq.com删除</p>
+                    <p>陕ICP备:17007989号</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="side-tool">
+        <ul>
+            <li class="gotop" data-placement="left" data-toggle="popover" data-container="body" data-trigger="hover" data-content="回到顶部" style="display: none">
+                <a><span class="glyphicon glyphicon-chevron-up"></span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="img" style="display: none">
+    <img src="__STATIC__/index/img/0.jpg" alt="">
+    <img src="__STATIC__/index/img/2.jpg" alt="">
+    <img src="__STATIC__/index/img/3.jpg" alt="">
+    <img src="__STATIC__/index/img/4.jpg" alt="">
+    <img src="__STATIC__/index/img/5.jpg" alt="">
+</div>
+<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+<script>tpwidget("init", {
+    "flavor": "bubble",
+    "location": "WX4FBXXFKE4F",
+    "geolocation": "enabled",
+    "position": "bottom-right",
+    "margin": "0px 0px",
+    "language": "zh-chs",
+    "unit": "c",
+    "theme": "chameleon",
+    "uid": "U676968700",
+    "hash": "358cdcce89730edf2ec9d83787748129"
+});
+tpwidget("show");</script>
+
+<script src="__STATIC__/index/js/nprogress.js"></script>
+<script src="__STATIC__/index/js/index.js"></script>
+
+</body>
+
+</html>
